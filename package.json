@@ -1,0 +1,12 @@
+{
+  "name": "splavy-perm",
+  "version": "1.0.0",
+  "description": "Планировщик сплавов по рекам Пермского края",
+  "private": true,
+  "scripts": {
+    "start": "npx --yes serve . -l 8080",
+    "dev": "npx --yes serve . -l 8080"
+  },
+  "keywords": ["сплав", "пермский край", "поход", "планировщик"],
+  "license": "MIT"
+}

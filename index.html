@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Планировщик водных походов по рекам Пермского края — маршруты, меню, снаряжение, бюджет и экспорт плана.">
+  <title>Сплавы — планировщик походов по рекам Пермского края</title>
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body data-theme="light">
+  <nav class="nav">
+    <div class="container nav__inner">
+      <a href="index.html" class="nav__logo">🛶 Сплавы</a>
+      <div class="nav__links">
+        <a href="#features">Возможности</a>
+        <a href="#rivers">Реки</a>
+        <a href="#how">Как это работает</a>
+        <button type="button" class="btn btn--secondary btn--icon" id="theme-toggle" title="Переключить тему" aria-label="Переключить тему">🌙</button>
+        <a href="app/index.html" class="btn btn--primary">Открыть планировщик</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero__content">
+      <span class="hero__badge">Пермский край · водные походы</span>
+      <h1>Спланируйте сплав за несколько минут</h1>
+      <p class="hero__subtitle">
+        Каталог из 25 рек, готовые маршруты, меню с расчётом продуктов, списки снаряжения,
+        прогноз погоды и экспорт плана — всё в одном приложении.
+      </p>
+      <div class="hero__actions">
+        <a href="app/index.html" class="btn btn--primary btn--lg">🚀 Начать планирование</a>
+        <a href="#how" class="btn btn--secondary btn--lg">Как пользоваться</a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat">
+          <div class="stat__value">25</div>
+          <div class="stat__label">рек в каталоге</div>
+        </div>
+        <div class="stat">
+          <div class="stat__value">75+</div>
+          <div class="stat__label">готовых маршрутов</div>
+        </div>
+        <div class="stat">
+          <div class="stat__value">6</div>
+          <div class="stat__label">типов меню</div>
+        </div>
+        <div class="stat">
+          <div class="stat__value">5</div>
+          <div class="stat__label">форматов экспорта</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title">Что умеет планировщик</h2>
+      <p class="section-subtitle">От выбора реки до готовой сметы — без таблиц вручную и долгих расчётов</p>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-card__icon">🌊</div>
+          <h3>Каталог рек</h3>
+          <p>Поиск и фильтры по сложности и сезону. Карточки с описанием, фото и достопримечательностями.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🗺</div>
+          <h3>Маршруты по дням</h3>
+          <p>Экспресс, классический и расширенный варианты. Километраж, стоянки, GPS-точки и советы.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🍽</div>
+          <h3>Меню и продукты</h3>
+          <p>Пресеты от «Эконом» до «Комфорт», конструктор своего меню, расчёт веса, калорий и стоимости.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🎒</div>
+          <h3>Снаряжение</h3>
+          <p>Автоматические списки личного и группового снаряжения, аптечки, кухни и ремонтного набора.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🌤</div>
+          <h3>Погода и одежда</h3>
+          <p>Прогноз через Open-Meteo с рекомендациями по экипировке на каждый день похода.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">💾</div>
+          <h3>Экспорт плана</h3>
+          <p>Печать, PDF, CSV, Excel и JSON — сохраняйте и делитесь планом с группой.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="rivers" class="rivers-preview">
+    <div class="container">
+      <h2 class="section-title">Популярные реки</h2>
+      <p class="section-subtitle">Несколько классических маршрутов — полный каталог доступен в планировщике</p>
+      <div class="rivers-grid">
+        <article class="river-card">
+          <img class="river-card__img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Chusovaya_river.jpg/640px-Chusovaya_river.jpg" alt="Река Чусовая" loading="lazy">
+          <div class="river-card__body">
+            <h3 class="river-card__title">Чусовая</h3>
+            <p class="river-card__meta">280 км · 5–10 дней · <span class="badge badge--medium">средняя</span></p>
+            <p style="font-size:.85rem;color:var(--text-muted);">Легендарная река со скалами, пещерами и семейными маршрутами.</p>
+          </div>
+        </article>
+        <article class="river-card">
+          <img class="river-card__img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Usva_river.jpg/640px-Usva_river.jpg" alt="Река Усьва" loading="lazy">
+          <div class="river-card__body">
+            <h3 class="river-card__title">Усьва</h3>
+            <p class="river-card__meta">120 км · 3–5 дней · <span class="badge badge--hard">сложная</span></p>
+            <p style="font-size:.85rem;color:var(--text-muted);">Горная река с порогами II–III класса и скалами «Столбы».</p>
+          </div>
+        </article>
+        <article class="river-card">
+          <img class="river-card__img" src="https://images.unsplash.com/photo-1439856345065-606368832ea4?w=640" alt="Река Вишера" loading="lazy">
+          <div class="river-card__body">
+            <h3 class="river-card__title">Вишера</h3>
+            <p class="river-card__meta">350 км · 7–12 дней · <span class="badge badge--hard">сложная</span></p>
+            <p style="font-size:.85rem;color:var(--text-muted);">Таёжная река для опытных групп с дикой природой и рыбалкой.</p>
+          </div>
+        </article>
+        <article class="river-card">
+          <img class="river-card__img" src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=640" alt="Река Кама" loading="lazy">
+          <div class="river-card__body">
+            <h3 class="river-card__title">Кама</h3>
+            <p class="river-card__meta">150 км · 3–5 дней · <span class="badge badge--easy">лёгкая</span></p>
+            <p style="font-size:.85rem;color:var(--text-muted);">Спокойный сплав для начинающих и семей с детьми.</p>
+          </div>
+        </article>
+      </div>
+      <p style="text-align:center;margin-top:2rem;">
+        <a href="app/index.html" class="btn btn--primary">Смотреть все 25 рек →</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="container">
+      <h2 class="section-title">Как это работает</h2>
+      <p class="section-subtitle">Четыре шага от идеи до готового плана похода</p>
+      <div class="steps">
+        <div class="step">
+          <h3>Выберите реку</h3>
+          <p>Найдите подходящий маршрут в каталоге или через поиск и фильтры.</p>
+        </div>
+        <div class="step">
+          <h3>Настройте параметры</h3>
+          <p>Укажите состав группы, даты, меню, трансфер и плавсредство.</p>
+        </div>
+        <div class="step">
+          <h3>Получите план</h3>
+          <p>Маршрут, продукты, снаряжение и бюджет обновляются автоматически.</p>
+        </div>
+        <div class="step">
+          <h3>Экспортируйте</h3>
+          <p>Сохраните план в файл или распечатайте для группы.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Готовы к воде?</h2>
+        <p>Откройте планировщик, выберите реку и сформируйте первый план — это займёт пару минут.</p>
+        <a href="app/index.html" class="btn btn--primary btn--lg">Открыть планировщик</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>🛶 Сплавы — планировщик водных походов по рекам Пермского края</p>
+      <p style="margin-top:.5rem;">
+        <a href="app/index.html">Планировщик</a> ·
+        <a href="https://github.com">GitHub</a> ·
+        MIT License
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/landing.js"></script>
+</body>
+</html>
