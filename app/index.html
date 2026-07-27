@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Планировщик сплава по рекам Пермского края — маршрут, меню, продукты, снаряжение, погода и экспорт.">
+  <title>Планировщик сплава — Пермский край</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-theme="light">
+  <!-- ===== ШАПКА ПРИЛОЖЕНИЯ ===== -->
+  <header class="header">
+    <div class="container header__inner">
+      <div>
+        <h1>🛶 Планировщик сплава</h1>
+        <p class="header__subtitle">Реки Пермского края — маршрут, меню, снаряжение и бюджет</p>
+      </div>
+      <div class="header__actions">
+        <a href="../index.html" class="btn btn--secondary btn--sm" title="На главную">🏠 Главная</a>
+        <button type="button" class="btn btn--secondary btn--icon" id="theme-toggle" title="Переключить тему" aria-label="Переключить тему">🌙</button>
+        <label class="btn btn--secondary btn--sm" for="load-json-input">📂 Загрузить</label>
+        <input type="file" id="load-json-input" accept=".json" class="hidden">
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ===== СЕКЦИЯ: КАТАЛОГ РЕК ===== -->
+    <section class="rivers-section card" id="rivers-section">
+      <div class="collapsible open" id="rivers-collapsible">
+        <div class="collapsible__header" data-target="rivers-collapsible">
+          <h2>🌊 Каталог рек Пермского края</h2>
+          <span class="collapsible__icon">▼</span>
+        </div>
+        <div class="collapsible__body">
+          <div class="search-bar">
+            <input type="search" id="river-search" placeholder="Поиск по названию, описанию, достопримечательностям…" aria-label="Поиск рек">
+            <select id="river-filter-difficulty" aria-label="Фильтр по сложности">
+              <option value="">Все сложности</option>
+              <option value="лёгкая">Лёгкая</option>
+              <option value="средняя">Средняя</option>
+              <option value="сложная">Сложная</option>
+            </select>
+            <select id="river-filter-season" aria-label="Фильтр по сезону">
+              <option value="">Все сезоны</option>
+              <option value="май">Май</option>
+              <option value="июнь">Июнь</option>
+              <option value="июль">Июль</option>
+              <option value="август">Август</option>
+              <option value="сентябрь">Сентябрь</option>
+            </select>
+          </div>
+          <div class="rivers-grid" id="rivers-grid" role="list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== СЕКЦИЯ: ФОРМА ПАРАМЕТРОВ ПОХОДА ===== -->
+    <section class="form-section card">
+      <h2>📋 Параметры похода <span class="live-update-badge">● автообновление</span></h2>
+      <form id="trip-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="river-select">Река</label>
+            <select id="river-select" name="river" required></select>
+          </div>
+          <div class="form-group">
+            <label for="participants">Участников</label>
+            <input type="number" id="participants" name="participants" min="1" max="30" value="4" required>
+          </div>
+          <div class="form-group">
+            <label for="days">Дней сплава</label>
+            <input type="number" id="days" name="days" min="1" max="21" value="3" required>
+          </div>
+          <div class="form-group">
+            <label for="menu-select">Меню</label>
+            <select id="menu-select" name="menuType">
+              <option value="economy">Эконом</option>
+              <option value="standard" selected>Стандарт</option>
+              <option value="comfort">Комфорт</option>
+              <option value="vegetarian">Вегетарианское</option>
+              <option value="kids">Детское</option>
+              <option value="custom">Пользовательское</option>
+            </select>
+            <p id="menu-recommendation-hint" class="menu-hint hidden"></p>
+          </div>
+          <div class="form-group">
+            <label for="start-date">Дата начала</label>
+            <input type="date" id="start-date" name="startDate" required>
+          </div>
+          <div class="form-group">
+            <label for="start-time">Время выхода</label>
+            <input type="time" id="start-time" name="startTime" value="09:00" required>
+          </div>
+          <div class="form-group">
+            <label for="end-time">Время финиша (последний день)</label>
+            <input type="time" id="end-time" name="endTime" value="17:00">
+          </div>
+          <div class="form-group">
+            <label for="budget">Бюджет (₽)</label>
+            <input type="number" id="budget" name="budget" min="0" step="100" value="50000">
+          </div>
+          <div class="form-group">
+            <label for="transfer">Трансфер</label>
+            <select id="transfer" name="transfer">
+              <option value="none">Без трансфера</option>
+              <option value="personal">Личный автомобиль</option>
+              <option value="bus">Автобус</option>
+              <option value="minibus">Микроавтобус</option>
+              <option value="custom">Заказной трансфер</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="transfer-cost">Стоимость трансфера (₽)</label>
+            <input type="number" id="transfer-cost" name="transferCost" min="0" step="100" value="0">
+            <span class="cost-hint" id="transfer-cost-hint">Укажите сумму вручную — она войдёт в смету</span>
+          </div>
+          <div class="form-group">
+            <label for="craft">Плавсредство</label>
+            <select id="craft" name="craft">
+              <option value="catamaran2">Катамаран 2-местный</option>
+              <option value="catamaran4">Катамаран 4-местный</option>
+              <option value="catamaran6">Катамаран 6-местный</option>
+              <option value="baidarka">Байдарка</option>
+              <option value="kayak">Каяк</option>
+              <option value="sup">Сапборд</option>
+              <option value="raft">Рафт (8-местный)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="craft-rent-cost">Стоимость аренды (₽)</label>
+            <input type="number" id="craft-rent-cost" name="craftRentCost" min="0" step="100" value="10500">
+            <span class="cost-hint" id="craft-rent-hint">Подсказка: ~10 500 ₽ за 3 дн.</span>
+          </div>
+        </div>
+        <!-- Конструктор пользовательского меню -->
+        <div id="custom-menu-panel" class="custom-menu-panel hidden">
+          <p><strong>Конструктор меню</strong> — добавляйте, редактируйте и удаляйте блюда по дням и приёмам пищи</p>
+          <div class="menu-builder-toolbar">
+            <input type="text" id="menu-template-name" placeholder="Название шаблона">
+            <button type="button" class="btn btn--secondary btn--sm" id="save-menu-template">💾 Сохранить шаблон</button>
+            <select id="menu-template-select" aria-label="Загрузить шаблон">
+              <option value="">— загрузить шаблон —</option>
+            </select>
+            <button type="button" class="btn btn--secondary btn--sm" id="delete-menu-template">🗑 Удалить</button>
+          </div>
+          <div id="menu-builder-days"></div>
+        </div>
+        <!-- Выбор маршрута (появляется после выбора реки) -->
+        <div id="routes-section" class="routes-section hidden">
+          <h3>🗺 Доступные маршруты</h3>
+          <p style="font-size:.85rem;color:var(--text-muted);">Выберите маршрут — параметры дней и рекомендуемое меню подставятся автоматически</p>
+          <input type="hidden" id="route-select" name="routeId" value="">
+          <div id="routes-list" class="routes-grid"></div>
+        </div>
+        <div id="selected-river-info" class="selected-river-info hidden"></div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary" id="generate-btn">🚀 Сформировать план</button>
+          <button type="reset" class="btn btn--secondary">↩ Сбросить</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===== СЕКЦИЯ: РЕЗУЛЬТАТЫ ПЛАНИРОВАНИЯ ===== -->
+    <section id="results" class="card">
+      <h2>📍 План сплава</h2>
+      <div class="export-bar">
+        <button type="button" class="btn btn--secondary btn--sm" id="export-print">🖨 Печать</button>
+        <button type="button" class="btn btn--secondary btn--sm" id="export-pdf">📄 PDF</button>
+        <button type="button" class="btn btn--secondary btn--sm" id="export-csv">📊 Excel (CSV)</button>
+        <button type="button" class="btn btn--secondary btn--sm" id="export-xlsx">📊 Excel (XML)</button>
+        <button type="button" class="btn btn--secondary btn--sm" id="export-json">💾 Сохранить JSON</button>
+      </div>
+
+      <!-- Маршрут по дням -->
+      <div class="collapsible open" id="route-collapsible">
+        <div class="collapsible__header" data-target="route-collapsible">
+          <h3>🗺 Маршрут по дням</h3>
+          <span class="collapsible__icon">▼</span>
+        </div>
+        <div class="collapsible__body" id="route-output"></div>
+      </div>
+
+      <!-- Погода -->
+      <div class="collapsible open" id="weather-collapsible">
+        <div class="collapsible__header" data-target="weather-collapsible">
+          <h3>🌤 Погода и одежда</h3>
+          <span class="collapsible__icon">▼</span>
+        </div>
+        <div class="collapsible__body">
+          <div id="weather-output"></div>
+          <div id="clothing-output"></div>
+        </div>
+      </div>
+
+      <!-- Меню -->
+      <div class="collapsible open" id="menu-collapsible">
+        <div class="collapsible__header" data-target="menu-collapsible">
+          <h3>🍽 Меню по дням</h3>
+          <span class="collapsible__icon">▼</span>
+        </div>
+        <div class="collapsible__body" id="menu-output"></div>
+      </div>
+
+      <!-- Продукты -->
+      <div class="collapsible open" id="products-collapsible">
+        <div class="collapsible__header" data-target="products-collapsible">
+          <h3>🛒 Список продуктов</h3>
+          <span class="collapsible__icon">▼</span>
+        </div>
+        <div class="collapsible__body">
+          <div class="table-wrap" id="products-output"></div>
+        </div>
+      </div>
+
+      <!-- Снаряжение -->
+      <div class="collapsible open" id="gear-collapsible">
+        <div class="collapsible__header" data-target="gear-collapsible">
+          <h3>🎒 Снаряжение</h3>
+          <span class="collapsible__icon">▼</span>
+        </div>
+        <div class="collapsible__body" id="gear-output"></div>
+      </div>
+
+      <!-- Бюджет -->
+      <div class="collapsible open" id="budget-collapsible">
+        <div class="collapsible__header" data-target="budget-collapsible">
+          <h3>💰 Бюджет</h3>
+          <span class="collapsible__icon">▼</span>
+        </div>
+        <div class="collapsible__body">
+          <div class="budget-summary" id="budget-output"></div>
+          <div class="table-wrap" id="budget-detail-output"></div>
+        </div>
+      </div>
+
+      <!-- Советы -->
+      <div class="collapsible open" id="tips-collapsible">
+        <div class="collapsible__header" data-target="tips-collapsible">
+          <h3>💡 Рекомендации</h3>
+          <span class="collapsible__icon">▼</span>
+        </div>
+        <div class="collapsible__body">
+          <ul class="tips-list" id="tips-output"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="js/app.js"></script>
+</body>
+</html>
